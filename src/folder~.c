@@ -14,7 +14,7 @@ typedef struct _folder_tilde {
     
 } t_folder_tilde;
 
-t_int *folder_tilde_perform(t_int *w)
+t_int * folder_tilde_perform (t_int * w)
 {
     t_folder_tilde *x = (t_folder_tilde *) (w[1]);
     t_sample    *in =     (t_sample *) (w[2]);
@@ -32,17 +32,17 @@ t_int *folder_tilde_perform(t_int *w)
     return (w+5);
 }
 
-void folder_tilde_dsp(t_folder_tilde *x, t_signal **sp)
+void folder_tilde_dsp (t_folder_tilde * x, t_signal ** sp)
 {
-    dsp_add(folder_tilde_perform, 4, x, sp[0]->s_vec, sp[1]->s_vec, sp[0]->s_n);
+    dsp_add (folder_tilde_perform, 4, x, sp[0]->s_vec, sp[1]->s_vec, sp[0]->s_n);
 }
 
-void folder_tilde_free(t_folder_tilde *x)
+void folder_tilde_free (t_folder_tilde * x)
 {
     outlet_free(x->x_out);
 }
 
-void *folder_tilde_new(t_floatarg f)
+void *folder_tilde_new (t_floatarg f)
 {
     t_folder_tilde *x = (t_folder_tilde *)pd_new(folder_tilde_class);
 

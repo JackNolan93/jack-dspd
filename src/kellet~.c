@@ -16,7 +16,7 @@ typedef struct _kellet_tilde {
     t_outlet*x_out;
 } t_kellet_tilde;
 
-t_int *kellet_tilde_perform(t_int *w)
+t_int *kellet_tilde_perform (t_int * w)
 {
     t_kellet_tilde *x = (t_kellet_tilde *) (w[1]);
     t_sample    *in   =       (t_sample *) (w[2]);
@@ -40,18 +40,18 @@ t_int *kellet_tilde_perform(t_int *w)
     return (w+6);
 }
 
-void kellet_tilde_dsp(t_kellet_tilde *x, t_signal **sp)
+void kellet_tilde_dsp (t_kellet_tilde * x, t_signal ** sp)
 {
     dsp_add(kellet_tilde_perform, 5, x, sp[0]->s_vec, sp[1]->s_vec, sp[2]->s_vec, sp[0]->s_n);
 }
 
-void kellet_tilde_free(t_kellet_tilde *x)
+void kellet_tilde_free (t_kellet_tilde * x)
 {
     inlet_free (x->x_in_frequency);
     outlet_free(x->x_out);
 }
 
-void *kellet_tilde_new(t_floatarg f)
+void * kellet_tilde_new (t_floatarg f)
 {
     t_kellet_tilde *x = (t_kellet_tilde *)pd_new(kellet_tilde_class);
 

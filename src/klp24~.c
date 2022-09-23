@@ -1,7 +1,7 @@
 #include "m_pd.h"
 #include <math.h>
 
-static t_class *klp24_tilde_class;
+static t_class * klp24_tilde_class;
 
 typedef struct _klp24_tilde {
     t_object x_obj;
@@ -18,7 +18,7 @@ typedef struct _klp24_tilde {
     t_outlet*x_out;
 } t_klp24_tilde;
 
-t_int *klp24_tilde_perform(t_int *w)
+t_int *klp24_tilde_perform (t_int * w)
 {
     t_klp24_tilde *x = (t_klp24_tilde *) (w[1]);
     t_sample    *in   =       (t_sample *) (w[2]);
@@ -44,18 +44,18 @@ t_int *klp24_tilde_perform(t_int *w)
     return (w+6);
 }
 
-void klp24_tilde_dsp(t_klp24_tilde *x, t_signal **sp)
+void klp24_tilde_dsp (t_klp24_tilde *x, t_signal **sp)
 {
-    dsp_add(klp24_tilde_perform, 5, x, sp[0]->s_vec, sp[1]->s_vec, sp[2]->s_vec, sp[0]->s_n);
+    dsp_add (klp24_tilde_perform, 5, x, sp[0]->s_vec, sp[1]->s_vec, sp[2]->s_vec, sp[0]->s_n);
 }
 
-void klp24_tilde_free(t_klp24_tilde *x)
+void klp24_tilde_free (t_klp24_tilde *x)
 {
     inlet_free (x->x_in_frequency);
-    outlet_free(x->x_out);
+    outlet_free (x->x_out);
 }
 
-void *klp24_tilde_new(t_floatarg f)
+void *klp24_tilde_new (t_floatarg f) 
 {
     t_klp24_tilde *x = (t_klp24_tilde *)pd_new(klp24_tilde_class);
 
