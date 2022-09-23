@@ -1,3 +1,9 @@
-[submodule "lib/puredata"]
-	path = lib/puredata
-	url = https://github.com/pure-data/pure-data.git
+[submodule "libs/pure-data"]
+	path = libs/pure-data
+	url = git@github.com:pure-data/pure-data.git
+[submodule "lib/pure-data"]
+	path = lib/pure-data
+	url = git@github.com:pure-data/pure-data.git
+[submodule "lib/pd.build"]
+	path = lib/pd.build
+	url = git@github.com:pierreguillot/pd.build.git
