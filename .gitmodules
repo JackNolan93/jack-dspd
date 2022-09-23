@@ -1,0 +1,3 @@
+[submodule "lib/puredata"]
+	path = lib/puredata
+	url = https://github.com/pure-data/pure-data.git
