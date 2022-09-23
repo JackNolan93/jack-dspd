@@ -1,6 +1,3 @@
-[submodule "libs/pure-data"]
-	path = libs/pure-data
-	url = git@github.com:pure-data/pure-data.git
 [submodule "lib/pure-data"]
 	path = lib/pure-data
 	url = git@github.com:pure-data/pure-data.git
