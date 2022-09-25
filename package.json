@@ -1,0 +1,29 @@
+{
+  "name": "jackdspd",
+  "version": "1.0.0",
+  "description": "library of pd externals",
+  "main": "index.js",
+  "directories": {
+    "lib": "lib"
+  },
+  "scripts": {
+    "help": "node documentation/help.js",
+    "clean": "node build/build.js clean",
+    "generate": "node build/build.js generate",
+    "build": "node build/build.js build",
+    "build-debug": "node build/build.js build Debug"
+  },
+  "dependencies": {
+    "yargs": "^15.4.1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/JackNolan93/jackdspd.git"
+  },
+  "author": "Jack Nolan",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/JackNolan93/jackdspd/issues"
+  },
+  "homepage": "https://github.com/JackNolan93/jackdspd#readme"
+}
