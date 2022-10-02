@@ -4,3 +4,6 @@
 [submodule "lib/pd.build"]
 	path = lib/pd.build
 	url = git@github.com:pierreguillot/pd.build.git
+[submodule "lib/DaisySP"]
+	path = lib/DaisySP
+	url = https://github.com/electro-smith/DaisySP.git
