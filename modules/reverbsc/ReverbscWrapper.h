@@ -25,8 +25,8 @@ extern "C" void ReverbScSetFreq (void * object, float frequency)
     static_cast <daisysp::ReverbSc *> (object)->SetLpFreq (frequency);
 }
 
- extern "C" void ReverbScSetFeedback (void * object, float feedback)
- {
-     static_cast <daisysp::ReverbSc *> (object)->SetFeedback (feedback);
- }
+extern "C" void ReverbScSetFeedback (void * object, float feedback)
+{
+    static_cast <daisysp::ReverbSc *> (object)->SetFeedback (feedback);
+}
 
