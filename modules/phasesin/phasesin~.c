@@ -21,21 +21,17 @@ typedef struct _phasesin_tilde {
 
     t_float x_frequency;
     
-    t_float x_centrepoint;
-    
     t_float x_phase;
     t_float x_phase_increment;
+    t_float x_distortion_phase;
     
-    t_float x_distphase;
-    t_float x_distphase_increment;
-    
-    bool falling;
+    t_float x_y_centre;
 
     t_inlet *x_in_centre;
     t_outlet*x_out;
 } t_phasesin_tilde;
 
-t_int *phasesin_tilde_perform(t_int *w)
+t_int * phasesin_tilde_perform (t_int *w)
 {
     t_phasesin_tilde * x = (t_phasesin_tilde *)(w[1]);
     t_sample * centre_point = (t_sample *)(w[2]);
@@ -48,19 +44,20 @@ t_int *phasesin_tilde_perform(t_int *w)
     {
         if (x->x_phase < centre_point [i])
         {
-            float m = 0.5 /  centre_point [i];
-            x->x_distphase = x->x_phase * m;
+            float m = x->x_y_centre / centre_point [i];
+            x->x_distortion_phase = x->x_phase * m;
         }
         else
         {
-            float m2 = 0.5 / (1.0 - centre_point [i]);
+            float m2 = (1.0 - x->x_y_centre) / (1.0 - centre_point [i]);
             float c = 1.0 - m2;
-            x->x_distphase = x->x_phase * m2 + c;
+            x->x_distortion_phase = x->x_phase * m2 + c;
         }
 
-        out [i] = cos (x->x_distphase * M_PI * 2.0);
+        out [i] = cos (x->x_distortion_phase * M_PI * 2.0);
         
         x->x_phase += x->x_phase_increment;
+        
         while (x->x_phase >= 1)
             x->x_phase -= 1;
     }
@@ -84,12 +81,12 @@ void *phasesin_tilde_new(t_floatarg f)
     t_phasesin_tilde *x = (t_phasesin_tilde *)pd_new(phasesin_tilde_class);
 
     x->x_phase = 0.0;
-    x->x_distphase = 0.0;
+    x->x_distortion_phase = 0.0;
     x->x_frequency = f;
-    x->x_centrepoint = 0.5;
-    x->falling = false;
 
     x->x_in_centre = inlet_new (&x->x_obj, &x->x_obj.ob_pd, &s_signal, &s_signal);
+    floatinlet_new(&x->x_obj, &x->x_y_centre);
+    
     x->x_out = outlet_new(&x->x_obj, &s_signal);
 
     return (void *)x;
