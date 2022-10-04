@@ -51,23 +51,24 @@ t_int *phasesin_tilde_perform(t_int *w)
         if (x->x_phase > 1.0)
         {
             x->x_phase -= 1.0;
-            x->x_centrepoint = centre_point [i];
+            x->x_distphase = x->x_phase * ((0.5f) / (centre_point [i] - x->x_phase));
         }
-    
-        
-//        if (x->x_phase <= centre_point [i] && x->falling)
-//        {
-//            x->x_distphase_increment = x->x_phase_increment * (0.5 / (centre_point [i] - x->x_phase));
-//            x->falling = false;
-//        }
-//        else if (x->x_phase > centre_point [i] && ! x->falling)
-//        {
-//            x->x_distphase_increment = x->x_phase_increment * (0.5 / (1.0 - x->x_phase));
-//            x->falling = true;
-//        }
+        else if (x->x_phase < centre_point [i])
+        {
+            x->x_distphase += x->x_phase_increment * ((0.5f - x->x_distphase) / (centre_point [i] - x->x_phase));
+            x->falling = false;
+        }
+        else if (! x->falling)
+        {
+            x->x_distphase = 0.5 + (x->x_phase - centre_point [i] * ((1.0f - 0.5) / (1.0 - x->x_phase)));
+            x->falling = true;
+        }
+        else
+        {
+            x->x_distphase += x->x_phase_increment * ((1.0f - x->x_distphase) / (1.0 - x->x_phase));
+        }
             
-        ;
-        x->x_distphase = x->x_phase <= x->x_centrepoint ? x->x_phase * (0.5 / x->x_centrepoint) : 0.5 + ((x->x_phase - x->x_centrepoint) * (0.5f / (1.f - x->x_centrepoint)));
+        x->x_distphase = fmodf ( x->x_distphase, 1.0);
 
         out [i] = cos (x->x_distphase * M_PI * 2.0);
     }
@@ -94,7 +95,7 @@ void *phasesin_tilde_new(t_floatarg f)
     x->x_distphase = 0.0;
     x->x_frequency = f;
     x->x_centrepoint = 0.5;
-    x->falling = true;
+    x->falling = false;
 
     x->x_in_centre = inlet_new (&x->x_obj, &x->x_obj.ob_pd, &s_signal, &s_signal);
     x->x_out = outlet_new(&x->x_obj, &s_signal);
