@@ -46,31 +46,23 @@ t_int *phasesin_tilde_perform(t_int *w)
     
     for(int i = 0; i < n; i++)
     {
-        x->x_phase += x->x_phase_increment;
-        
-        if (x->x_phase > 1.0)
+        if (x->x_phase < centre_point [i])
         {
-            x->x_phase -= 1.0;
-            x->x_distphase = x->x_phase * ((0.5f) / (centre_point [i]));
-            x->falling = false;
+            float m = 0.5 /  centre_point [i];
+            x->x_distphase = x->x_phase * m;
         }
-        else if (x->x_phase < centre_point [i])
+        else
         {
-            x->x_distphase += x->x_phase_increment * ((0.5f - x->x_distphase) / (centre_point [i] - x->x_phase));
-            x->falling = false;
-        }
-        
-        if (! x->falling && x->x_phase >= centre_point [i])
-        {
-            x->x_distphase = 0.5 + (x->x_phase - centre_point [i] * ((1.0f - 0.5) / (1.0 - centre_point [i])));
-            x->falling = true;
-        }
-        else if (x->x_phase >= centre_point [i])
-        {
-            x->x_distphase += x->x_phase_increment * ((1.0f - x->x_distphase) / (1.0 - x->x_phase));
+            float m2 = 0.5 / (1.0 - centre_point [i]);
+            float c = 1.0 - m2;
+            x->x_distphase = x->x_phase * m2 + c;
         }
 
         out [i] = cos (x->x_distphase * M_PI * 2.0);
+        
+        x->x_phase += x->x_phase_increment;
+        while (x->x_phase >= 1)
+            x->x_phase -= 1;
     }
     
     return (w+5);
